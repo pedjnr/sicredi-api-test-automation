@@ -11,6 +11,12 @@ Projeto de automação de testes de API desenvolvido em Java com RestAssured, JU
 
 O repositório inclui a API do desafio técnico Sicredi usada como aplicação sob teste e uma suíte automatizada para validar endpoints de restrições e simulações de crédito. A estrutura foi organizada para portfólio, com documentação, execução local, Docker, relatórios Allure e pipeline CI/CD.
 
+## Links Principais
+
+- [Relatório Allure publicado no GitHub Pages](https://pedjnr.github.io/sicredi-api-test-automation/)
+- [Matriz de Casos de Teste](documentacao_planejamento_testes/relatorios/matriz_casos_teste_api_sicredi.xlsx)
+- [Relatório de Bugs](documentacao_planejamento_testes/relatorios/relatorio_bugs_api_sicredi.xlsx)
+
 ## Escopo Dos Testes
 
 - Validação dos endpoints `GET /restricoes/{cpf}` e `/simulacoes`.
@@ -86,18 +92,12 @@ mvn allure:serve
 
 Os resultados gerados ficam em `testes_automatizados/desafiosicredi/target/`.
 
-No pipeline CI/CD, o relatório Allure é gerado mesmo quando existem testes falhando, preservando as evidências da execução. Após a primeira publicação no GitHub Pages, o relatório HTML ficará disponível em:
-
-```txt
-https://pedjnr.github.io/sicredi-api-test-automation/
-```
+No pipeline CI/CD, o relatório Allure é gerado mesmo quando existem testes falhando, preservando as evidências da execução. O relatório publicado pode ser acessado pelos links principais no início deste README.
 
 ## Artefatos De Qualidade
 
 - [Matriz de Casos de Teste](documentacao_planejamento_testes/relatorios/matriz_casos_teste_api_sicredi.xlsx)
 - [Relatório de Bugs](documentacao_planejamento_testes/relatorios/relatorio_bugs_api_sicredi.xlsx)
-- Relatório Allure publicado pelo pipeline CI/CD.
-- Artefatos de execução disponíveis em cada run do workflow.
 
 ## Executando Com Docker
 
