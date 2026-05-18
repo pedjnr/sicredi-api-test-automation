@@ -12,10 +12,16 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   rest-assured:
-    name: RestAssured test suite
+    name: Generate test report
     runs-on: ubuntu-latest
+    outputs:
+      test-exit-code: ${{ steps.tests.outputs.exit_code }}
 
     steps:
       - name: Checkout repository
@@ -48,7 +54,14 @@ jobs:
           exit 1
 
       - name: Run automated API tests
-        run: mvn -B -f testes_automatizados/desafiosicredi/pom.xml test -Denv=local
+        id: tests
+        shell: bash
+        run: |
+          set +e
+          mvn -B -f testes_automatizados/desafiosicredi/pom.xml test -Denv=local
+          status=$?
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
 
       - name: Generate Allure report
         if: always()
@@ -65,6 +78,17 @@ jobs:
             testes_automatizados/desafiosicredi/target/surefire-reports/
             testes_automatizados/desafiosicredi/target/allure-results/
             testes_automatizados/desafiosicredi/target/allure-reports/
+          retention-days: 30
+
+      - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+
+      - name: Upload Allure report for GitHub Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: testes_automatizados/desafiosicredi/target/allure-reports
 
       - name: Stop Sicredi API
         if: always()
@@ -73,3 +97,47 @@ jobs:
           if [ -f api.pid ]; then
             kill "$(cat api.pid)" || true
           fi
+
+  deploy-report:
+    name: Publish Allure report
+    if: github.event_name != 'pull_request'
+    needs: rest-assured
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy Allure report to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  quality-gate:
+    name: Preserve test result status
+    if: always()
+    needs:
+      - rest-assured
+      - deploy-report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fail workflow if automated tests failed
+        shell: bash
+        run: |
+          exit_code="${{ needs.rest-assured.outputs.test-exit-code }}"
+
+          if [ -z "$exit_code" ]; then
+            echo "Automated tests did not finish or did not report an exit code."
+            exit 1
+          fi
+
+          if [ "$exit_code" != "0" ]; then
+            echo "Automated tests finished with failures. Allure report and artifacts were still generated."
+            exit "$exit_code"
+          fi
+
+          echo "Automated tests passed."

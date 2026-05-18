@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.sicred.challenge.final</groupId>
-  <artifactId>sicredi-api-test-automation</artifactId>
+  <artifactId>desafioSicred</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>Sicredi API Test Automation</name>
+  <name>desafiosicred</name>
   <url>https://github.com/pedjnr/sicredi-api-test-automation</url>
 
   <properties>

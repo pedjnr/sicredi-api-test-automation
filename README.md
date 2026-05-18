@@ -9,7 +9,7 @@
 
 Projeto de automação de testes de API desenvolvido em Java com RestAssured, JUnit 5, validação de contrato via JSON Schema e relatórios Allure.
 
-O repositório inclui a API de referência usada como aplicação sob teste e uma suíte automatizada para validar endpoints de restrições e simulações de crédito. Esta versão foi organizada para GitHub e portfólio, com artefatos gerados removidos, `.gitignore` dedicado e pipeline em GitHub Actions.
+O repositório inclui a API do desafio técnico Sicredi usada como aplicação sob teste e uma suíte automatizada para validar endpoints de restrições e simulações de crédito. A estrutura foi organizada para portfólio, com documentação, execução local, Docker, relatórios Allure e pipeline CI/CD.
 
 ## Escopo Dos Testes
 
@@ -28,9 +28,12 @@ O repositório inclui a API de referência usada como aplicação sob teste e um
 |-- documentacao_planejamento_testes/
 |   |-- Plano de Testes.md
 |   |-- images/
-|   `-- mapa_mental/
-|-- sicredi_API/desafio-sicredi-master/prova-tecnica-api/
-|   `-- API Spring Boot usada nos testes
+|   |-- mapa_mental/
+|   `-- relatorios/
+|-- sicredi_API/desafio-sicredi-master/
+|   |-- readme.md
+|   |-- Orientações para execução do Desafio_v1.pdf
+|   `-- prova-tecnica-api/
 |-- testes_automatizados/desafiosicredi/
 |   `-- suíte RestAssured/JUnit 5
 |-- docker-compose.yaml
@@ -83,6 +86,19 @@ mvn allure:serve
 
 Os resultados gerados ficam em `testes_automatizados/desafiosicredi/target/`.
 
+No pipeline CI/CD, o relatório Allure é gerado mesmo quando existem testes falhando, preservando as evidências da execução. Após a primeira publicação no GitHub Pages, o relatório HTML ficará disponível em:
+
+```txt
+https://pedjnr.github.io/sicredi-api-test-automation/
+```
+
+## Artefatos De Qualidade
+
+- [Matriz de Casos de Teste](documentacao_planejamento_testes/relatorios/matriz_casos_teste_api_sicredi.xlsx)
+- [Relatório de Bugs](documentacao_planejamento_testes/relatorios/relatorio_bugs_api_sicredi.xlsx)
+- Relatório Allure publicado pelo pipeline CI/CD.
+- Artefatos de execução disponíveis em cada run do workflow.
+
 ## Executando Com Docker
 
 Na raiz do projeto:
@@ -108,14 +124,17 @@ O workflow em `.github/workflows/api-tests.yml` executa:
 - Execução da suíte RestAssured.
 - Geração de relatório Allure.
 - Upload dos artefatos de teste.
+- Publicação do relatório Allure no GitHub Pages.
+
+Caso existam testes falhando, o workflow mantém o status final de falha para refletir os defeitos encontrados, mas ainda publica o relatório e os artefatos para análise.
 
 ## Documentação
 
 - [Plano de Testes](documentacao_planejamento_testes/Plano%20de%20Testes.md)
+- [Matriz de Casos de Teste](documentacao_planejamento_testes/relatorios/matriz_casos_teste_api_sicredi.xlsx)
+- [Relatório de Bugs](documentacao_planejamento_testes/relatorios/relatorio_bugs_api_sicredi.xlsx)
+- [Regras da API](sicredi_API/desafio-sicredi-master/readme.md)
+- [Orientações do desafio](sicredi_API/desafio-sicredi-master/Orienta%C3%A7%C3%B5es%20para%20execu%C3%A7%C3%A3o%20do%20Desafio_v1.pdf)
 - [Mapa mental](documentacao_planejamento_testes/mapa_mental/%5BAPI%5D%20SICRED.xmind)
 
 ![API Spring Boot em execução](documentacao_planejamento_testes/images/ReadMe/aplicação%20spring-boot%20rodando.png)
-
-## Observação
-
-Este projeto foi adaptado de um desafio técnico para fins de estudo e portfólio, com foco em demonstrar organização de testes, automação de APIs, documentação, execução local, Docker e CI/CD.
