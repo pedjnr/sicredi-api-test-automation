@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "nome": {
+        "type": "string"
+      },
+      "cpf": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string"
+      },
+      "valor": {
+        "type": "number"
+      },
+      "parcelas": {
+        "type": "integer"
+      },
+      "seguro": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "nome",
+      "cpf",
+      "email",
+      "valor",
+      "parcelas",
+      "seguro"
+    ]
+  }

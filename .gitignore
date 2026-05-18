@@ -1,0 +1,29 @@
+# Maven
+target/
+
+# Allure
+allure-results/
+allure-report/
+allure-reports/
+.allure/
+
+# Java build output
+bin/
+*.class
+
+# IDEs
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+
+# OS and logs
+.DS_Store
+Thumbs.db
+*.log
+
+# Local environment
+.env
+.env.*
+!.env.example

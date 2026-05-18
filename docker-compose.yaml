@@ -1,0 +1,14 @@
+services:
+  sicrediapi:
+    build:
+      context: ./sicredi_API/desafio-sicredi-master/prova-tecnica-api
+    ports:
+      - "8080:8080"
+
+  testes:
+    build:
+      context: ./testes_automatizados/desafiosicredi
+    depends_on:
+      - sicrediapi
+    volumes:
+      - ./testes_automatizados/desafiosicredi/target:/home/app/target

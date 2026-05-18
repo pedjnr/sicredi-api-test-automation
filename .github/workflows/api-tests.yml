@@ -1,0 +1,75 @@
+name: API test automation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rest-assured:
+    name: RestAssured test suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+          cache: maven
+
+      - name: Start Sicredi API
+        shell: bash
+        run: |
+          mvn -B -f sicredi_API/desafio-sicredi-master/prova-tecnica-api/pom.xml spring-boot:run > api.log 2>&1 &
+          echo $! > api.pid
+
+      - name: Wait for API health check
+        shell: bash
+        run: |
+          for attempt in {1..60}; do
+            if curl -fsS http://localhost:8080/actuator/health > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+
+          cat api.log
+          exit 1
+
+      - name: Run automated API tests
+        run: mvn -B -f testes_automatizados/desafiosicredi/pom.xml test -Denv=local
+
+      - name: Generate Allure report
+        if: always()
+        run: mvn -B -f testes_automatizados/desafiosicredi/pom.xml allure:report
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-artifacts
+          if-no-files-found: ignore
+          path: |
+            api.log
+            testes_automatizados/desafiosicredi/target/surefire-reports/
+            testes_automatizados/desafiosicredi/target/allure-results/
+            testes_automatizados/desafiosicredi/target/allure-reports/
+
+      - name: Stop Sicredi API
+        if: always()
+        shell: bash
+        run: |
+          if [ -f api.pid ]; then
+            kill "$(cat api.pid)" || true
+          fi
