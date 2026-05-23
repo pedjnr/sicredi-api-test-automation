@@ -9,7 +9,7 @@
 
 Projeto de automação de testes de API desenvolvido em Java com RestAssured, JUnit 5, validação de contrato via JSON Schema e relatórios Allure.
 
-O repositório inclui a API do desafio técnico Sicredi usada como aplicação sob teste e uma suíte automatizada para validar endpoints de restrições e simulações de crédito. A estrutura foi organizada para portfólio, com documentação, execução local, Docker, relatórios Allure e pipeline CI/CD.
+O repositório inclui a API do desafio técnico Sicredi usada como aplicação sob teste e uma suíte automatizada para validar endpoints de restrições e simulações de crédito.
 
 ## Links Principais
 
