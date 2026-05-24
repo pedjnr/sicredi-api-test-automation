@@ -128,13 +128,19 @@ O workflow em `.github/workflows/api-tests.yml` executa:
 
 Caso existam testes falhando, o workflow mantém o status final de falha para refletir os defeitos encontrados, mas ainda publica o relatório e os artefatos para análise.
 
+## Referência Do Desafio
+
+Este projeto foi desenvolvido a partir de um desafio técnico de automação de APIs da Sicredi.
+
+- [Orientações do desafio](sicredi_API/desafio-sicredi-master/Orienta%C3%A7%C3%B5es%20para%20execu%C3%A7%C3%A3o%20do%20Desafio_v1.pdf)
+- [Regras da API](sicredi_API/desafio-sicredi-master/readme.md)
+- [Projeto da API base](sicredi_API/desafio-sicredi-master/prova-tecnica-api)
+
 ## Documentação
 
 - [Plano de Testes](documentacao_planejamento_testes/Plano%20de%20Testes.md)
 - [Matriz de Casos de Teste](documentacao_planejamento_testes/relatorios/matriz_casos_teste_api_sicredi.xlsx)
 - [Relatório de Bugs](documentacao_planejamento_testes/relatorios/relatorio_bugs_api_sicredi.xlsx)
-- [Regras da API](sicredi_API/desafio-sicredi-master/readme.md)
-- [Orientações do desafio](sicredi_API/desafio-sicredi-master/Orienta%C3%A7%C3%B5es%20para%20execu%C3%A7%C3%A3o%20do%20Desafio_v1.pdf)
 - [Mapa mental](documentacao_planejamento_testes/mapa_mental/%5BAPI%5D%20SICRED.xmind)
 
 ![API Spring Boot em execução](documentacao_planejamento_testes/images/ReadMe/aplicação%20spring-boot%20rodando.png)
